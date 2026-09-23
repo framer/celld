@@ -153,12 +153,13 @@ pub fn report_managed_runtime_state(state: ManagedRuntimeState) {
              fresh one, or run `celld credentials refresh` if a rotation is pending"
         ),
         // No remedy on this node: the store lacks a required operation, so a
-        // restart repeats the refusal. The operator needs a compatible store.
+        // restart repeats the refusal. Name the two exits an operator has.
         ManagedRuntimeState::StorageContractViolated => warn!(
             event = "managed_runtime_state",
             managed_state,
             "the fleet bucket does not support a storage operation celld requires, \
-             so serving cannot start; move the fleet to a compatible store"
+             so serving cannot start; move the fleet to a compatible store, or set \
+             CELLD_STORAGE_PROBE=0 to start without this test"
         ),
     }
 }

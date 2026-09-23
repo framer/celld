@@ -110,11 +110,6 @@ const REMOVED: &[Removed] = &[
         empty_was_inert: false,
     },
     Removed {
-        name: "CELLD_STORAGE_PROBE",
-        replacement: "remove this setting; celld checks the storage contract before serving",
-        empty_was_inert: false,
-    },
-    Removed {
         name: "CELLD_EVICTIONS",
         replacement: "remove this setting; celld uses its built-in scheduling limits",
         empty_was_inert: false,

@@ -289,7 +289,7 @@ pub async fn probe_storage_before_serving(bucket: &Bucket, managed: bool) -> any
                 }
                 bail!(
                     "the bucket does not keep the storage contract, so celld cannot serve cells \
-                     safely on it: {reason}. Use a store that supports the required operations"
+                     safely on it: {reason}. Use a store that supports the required operations or set CELLD_STORAGE_PROBE=0 to start without this test"
                 )
             }
             Err(error) if attempt < ATTEMPTS => {

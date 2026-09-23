@@ -79,9 +79,9 @@ three attempts when an operation fails without a clear cause. The node
 starts with a warning after all three attempts fail because a temporary
 outage can end after startup. The node stops immediately when a required
 conditional write or ranged read is unsupported. It also stops when the
-store ignores a condition or returns a wrong range or wrong bytes. A node
-cannot disable this startup test. Use `celld diagnose --read-only` with a
-credential that cannot write.
+store ignores a condition or returns a wrong range or wrong bytes. Set
+`CELLD_STORAGE_PROBE=0` to disable the startup test, or run
+`celld diagnose --read-only` with a credential that cannot write.
 
 The diagnose test writes and deletes one small object under `probe/`.
 The startup test uses a second object for the ranged read. A process
