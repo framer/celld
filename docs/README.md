@@ -1031,6 +1031,7 @@ For the full list, run `celld -h`. This table shows the primary settings:
 | `CELLD_DEPLOY_POLL_S` | The interval in seconds at which a node reads the deployment pointer and adopts a new deployment in place (default: 30) |
 | `CELLD_DEPLOY_MAX_AGE_S` | How long a resident Durable Object can keep the previous deployment's code after an adoption before celld forces the move (default: 60; 0 forces at once) |
 | `CELLD_OPERATION_DEADLINE_MS` | The deadline for a non-restore operation (default: 15000) |
+| `CELLD_STORAGE_PROBE` | The default is `1`: a bucket-backed node tests the store's conditional writes and ranged reads before it serves, and refuses to start on a store that fails either test. Set `0` to skip the test. A store that fails it can give one cell two owners or return wrong cell data, so the switch is for a store an operator has verified in another way |
 | `CELLD_MAX_CELL_REQUESTS` | The concurrent fetch limit for one Durable Object or Queue broker (default: 64) |
 | `CELLD_MAX_REQUEST_BODY_BYTES` | The body limit for a public Worker request or a direct Durable Object request (default: 1 GiB) |
 | `CELLD_MAX_RESIDENT_CELLS` | The hard limit for resident cells, enforced at admission |
@@ -1073,7 +1074,6 @@ an empty value or a value that matches the former default.
 | `CELLD_OTEL_SINK` | Set `CELLD_OTEL=1` for the fleet bucket or set `CELLD_OTEL` to the collector base URL for OTLP. |
 | `CELLD_AI_BINDING`, `CELLD_AI_URL` | The experimental AI adapter is removed. Call the provider from application code and remove the AI binding declaration. |
 | `CELLD_CLOUD_RESTART_ON_DEPLOY` | A managed deployment adopts the new code in place. Credential rotation can still restart the process. |
-| `CELLD_STORAGE_PROBE` | A node checks the storage contract before it serves a bucket-backed deployment. |
 | `CELLD_EVICTIONS` | A node runs at most four concurrent evictions. |
 | `CELLD_LOG_CAPTURE_WORKERS` | A node uses at most eight workers for log capture. |
 | `CELLD_REBALANCE_BATCH_CELLS` | A balancing batch moves at most 32 idle cells. The release limit and the receiver capacity can reduce this count. |

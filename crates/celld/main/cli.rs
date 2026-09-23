@@ -19,6 +19,10 @@ pub(crate) struct Settings {
     /// Whether forwarded scheme and host headers can set `request.url`.
     /// This option is off unless a trusted proxy replaces both headers.
     pub(crate) trust_forwarded_headers: bool,
+    /// Whether a node tests the bucket's conditional writes and ranged reads
+    /// before it serves. On by default, because a store that mishandles either
+    /// operation cannot safely serve cell data.
+    pub(crate) storage_probe: bool,
     /// Set only by the `celld dev` supervisor for its child node. No fleet
     /// flag or public environment variable selects the local backend.
     pub(crate) dev_store: Option<std::path::PathBuf>,
@@ -150,6 +154,7 @@ pub(crate) fn action_from_process() -> anyhow::Result<Action> {
         advertise: configured_advertise,
         unsafe_public_advertise: celld::env_vars::flag("CELLD_UNSAFE_PUBLIC_ADVERTISE", false)?,
         trust_forwarded_headers: celld::env_vars::flag("CELLD_TRUST_FORWARDED_HEADERS", false)?,
+        storage_probe: celld::env_vars::flag("CELLD_STORAGE_PROBE", true)?,
         dev_store: if diagnose {
             None
         } else {
@@ -340,6 +345,8 @@ ENVIRONMENT:
   CELLD_ASSET_CACHE_BYTES         Asset cache limit
 
 TUNING:
+  CELLD_STORAGE_PROBE             `0` skips the startup storage-contract test
+                                  (default: on)
   CELLD_TTL_MS                    Node lease lifetime (default: 10000)
   CELLD_OPERATION_DEADLINE_MS     Non-restore operation deadline (default: 15000)
   CELLD_SHUTDOWN_TOTAL_MS         Complete process stop bound (default: {shutdown_total_ms})

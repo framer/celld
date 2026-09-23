@@ -633,6 +633,7 @@ async fn start_node(
         "CELLD_BUCKET",
         "CELLD_CLOUD",
         "CELLD_INTERNAL_ADDR",
+        "CELLD_STORAGE_PROBE",
         "CELLD_TEST_BUCKET",
         "CELLD_TRUST_FORWARDED_HEADERS",
         "CELLD_UNSAFE_PUBLIC_ADVERTISE",

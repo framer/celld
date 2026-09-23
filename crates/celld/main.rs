@@ -3400,6 +3400,7 @@ fn shutdown_accept_failure_test_action() -> Action {
         advertise: None,
         unsafe_public_advertise: false,
         trust_forwarded_headers: false,
+        storage_probe: false,
         dev_store: None,
     })
 }
@@ -3804,7 +3805,9 @@ async fn async_main(telemetry_config: Option<celld::telemetry::Config>) -> anyho
             // The list above proves the bucket answers; it does not prove the
             // store enforces the conditional writes or ranged reads that a
             // cell needs. Test both contracts here before the node serves.
-            fleet::probe_storage_before_serving(&client, settings.control_plane).await?;
+            if settings.storage_probe {
+                fleet::probe_storage_before_serving(&client, settings.control_plane).await?;
+            }
             let lease_client = node_bucket(&settings, managed_storage.as_ref(), true)?;
             if settings.control_plane {
                 celld::control_plane::wait_for_initial_deployment(&client).await?;
